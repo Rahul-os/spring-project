@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+ 	
+ 	 <!--  
+ 	<bean id = "std" class = "core.Student">
+ 		<property name="rno" value="69"></property>
+ 		<property name="name" value="Rahul"></property>
+ 		
+ 	</bean>
+ 	-->
+ 	<!--  
+ 	<bean id= "std" class="core.Student">
+ 		<constructor-arg name = "rno" value ="100"></constructor-arg>
+ 		<constructor-arg name="name" value ="Usingconstructor"></constructor-arg>
+ 	</bean>
+	-->
+	<!--  init and destroy methods example 
+	<bean id="employee" class = "core.Employee" scope ="singleton" init-method="start" destroy-method="stop">
+	<property name ="empcode" value ="101" ></property>
+	<property name = "empname" value = "Deloitte"></property>
+	<property name="skills">
+		<list>
+			<value>Java</value>
+			<value>Spring</value>
+			<value>React</value>
+		</list>
+	</property>
+	</bean>
+	-->
+	 <!--
+	<bean id="addr" class = "core.Address">
+		<property name="street" value="Koretipadu"></property>
+		<property name="city" value="Guntur"></property>
+	</bean>
+	  -->
+	<!--  MANUAL WIRING --> 
+	<!--  
+	<bean id="std" class="core.Student">
+		<constructor-arg name ="rno" value="200"></constructor-arg>
+		<constructor-arg name ="name" value="Yogesh"></constructor-arg> 
+		<constructor-arg name ="address" ref="addr"></constructor-arg>
+		
+		
+	</bean> 
+	<bean id="addr" class="core.Address">
+		<property name ="street" value ="Hitech city"></property>
+		<property name="city" value="hyderabad" ></property>
+		
+		
+	</bean>
+	 -->
+	 <!-- Auto Wiring  by constructor-->  
+	 <!-- 
+	<bean id ="std" class="core.Student" autowire="constructor">	 
+		<constructor-arg name = "rno" value="5900" ></constructor-arg>           
+		<constructor-arg name = "name" value="Yogesh"></constructor-arg>
+		
+	</bean>
+	 -->
+	 <!--  
+	<bean id="employee" class = "core.Employee" scope ="prototype" init-method="start" destroy-method="stop">
+		<property name="empcode" value="120" ></property>
+		<property name="empname" value="Harshith"></property>
+		<property name="skills">
+			<list>
+				<value>abc</value>
+				<value>def</value>
+			</list>
+		</property>
+	</bean>
+	-->
+	<!--  
+	<context:annotation-config></context:annotation-config>
+	<context:component-scan base-package="annotations"></context:component-scan>
+	-->
+<bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+<property name="url" value="jdbc:mysql://localhost:3306/deloittedb" />
+<property name="username" value="root" />
+<property name="password" value="root" />
+</bean>
+
+<bean id="jdbcTemplate"
+class="org.springframework.jdbc.core.JdbcTemplate">
+<property name="dataSource" ref="ds"></property>
+</bean>
+
+<bean id="dao" class="jdbc.EmployeeDaoImpl">
+<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+</bean>
+</beans>
